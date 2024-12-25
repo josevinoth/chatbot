@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP Query Processor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
+    <script>
+        function suggestQuery() {
+            const input = document.getElementById("command").value.toLowerCase();
+            const suggestions = [
+                "Show poorly performing machines",
+                "List machines with high cycle time",
+                "Display downtime after 10 AM",
+                "Find parts with high rejection rate",
+                "List machines with high energy consumption",
+                "Find machines with low performance",
+                "Show faulty parts with high rejection",
+                "Display machines with downtime after 10 AM",
+                "Find machines with long cycle time",
+                "Show parts with high scrap rate",
+                "List machines with low energy efficiency",
+                "Display performance issues in machines"
+            ];
+            const suggestionBox = document.getElementById("suggestions");
+            suggestionBox.innerHTML = "";
+
+            suggestions.forEach(query => {
+                if (query.toLowerCase().includes(input)) {
+                    const option = document.createElement("option");
+                    option.value = query;
+                    suggestionBox.appendChild(option);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>NLP Query Processor</h1>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="command">Enter your query:</label>
+            <input type="text" id="command" name="command" oninput="suggestQuery()" list="suggestions" placeholder="e.g., Show poorly performing machines">
+            <datalist id="suggestions"></datalist>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="output">
+            <h3>Output:</h3>
+            <div>
+                {{ output|safe }}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

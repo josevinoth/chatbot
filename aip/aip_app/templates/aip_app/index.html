@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Command Input</title>
+</head>
+<body>
+    <h1>Text Command Input</h1>
+
+    <!-- Text input form -->
+    <div>
+        <label for="textCommand">Enter your text command:</label>
+        <input type="text" id="textCommand" placeholder="Enter your command">
+        <button onclick="submitTextCommand()">Submit Text Command</button>
+    </div>
+
+    <div id="response" style="margin-top: 20px;"></div>
+
+    <script>
+        function submitTextCommand() {
+            const command = document.getElementById("textCommand").value;
+            fetch('/aip/text_command/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `command=${command}`,
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("response").innerText = data;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
